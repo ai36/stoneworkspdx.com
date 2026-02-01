@@ -1,9 +1,21 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 
-export const Logo = ({ scrolled = false }) => {
+type LogoProps = {
+  scrolled?: boolean;
+  className?: string;
+};
+
+export const Logo = ({ scrolled = false, className }: LogoProps) => {
   return (
-    <Link to="/" className={cn("flex items-center gap-2 w-[240px]", scrolled ? "text-foreground" : "text-background")}>
+    <Link
+      to="/"
+      className={cn(
+        "flex items-center gap-2 w-[240px]",
+        scrolled ? "text-foreground" : "text-background",
+        className,
+      )}
+    >
       <svg
         width="429"
         height="81"

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { getFeaturedItems } from '@/data/portfolio';
 
 export function PortfolioTeaser() {
-  const featuredItems = getFeaturedItems().slice(0, 6);
+  const featuredItems = getFeaturedItems().slice(0, 3);
 
   return (
     <section className="section-padding bg-background">

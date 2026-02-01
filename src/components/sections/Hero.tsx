@@ -5,7 +5,7 @@ import heroImage from '@/assets/hero-fireplace.jpg';
 
 const trustBadges = [
   // { icon: Shield, text: 'Licensed & Insured' },
-  { icon: Clock, text: 'On-time & On-budget' },
+  { icon: Clock, text: 'On‑time On‑budget' },
   { icon: Award, text: 'Workmanship Warranty' },
   { icon: FileText, text: 'Detailed Quotes' },
 ];
@@ -57,7 +57,7 @@ export function Hero() {
                 className="flex items-center gap-2 text-stone-300"
               >
                 <badge.icon className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-sm font-medium text-balance">{badge.text}</span>
+                <span className="text-sm font-medium text-balance max-w-min">{badge.text}</span>
               </div>
             ))}
           </div>

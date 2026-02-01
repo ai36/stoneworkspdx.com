@@ -7,7 +7,7 @@ export function ServiceAreaSnippet() {
   const primaryAreas = getPrimaryAreas();
 
   return (
-    <section className="section-padding bg-primary">
+    <section className="section-padding bg-primary/90">
       <div className="container">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           {/* Text */}
@@ -15,7 +15,7 @@ export function ServiceAreaSnippet() {
             <h2 className="font-display text-2xl md:text-3xl font-semibold text-primary-foreground mb-4">
               Serving Portland, OR & Vancouver, WA
             </h2>
-            <p className="text-primary-foreground/80 mb-6 max-w-xl">
+            <p className="text-primary-foreground/80 mb-6 max-w-xl mx-auto lg:mx-0">
               We provide expert stone and brick masonry services throughout the 
               greater Portland metro area and Southwest Washington.
             </p>
