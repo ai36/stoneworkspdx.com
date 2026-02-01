@@ -2,7 +2,6 @@ import type { MetaFunction } from "react-router";
 
 import { useState, type FormEvent } from "react";
 import {
-  Phone,
   Mail,
   Clock,
   CheckCircle,
@@ -30,6 +29,7 @@ import {
   validateForm,
   submitLeadForm,
   resetForm,
+  type ValidationErrors,
 } from "@/features/leadForm/leadFormSlice";
 import { services } from "@/data/services";
 import { cn } from "@/lib/utils";
@@ -85,7 +85,7 @@ export default function ContactRoute() {
 
     // 2) Читаем АКТУАЛЬНЫЕ ошибки из store (а не из замыкания)
     //    Это убирает "гонки" и делает submit предсказуемым.
-    const state = store.getState() as { leadForm: { validationErrors: any } };
+    const state = store.getState() as { leadForm: { validationErrors: ValidationErrors } };
     const errors = state.leadForm?.validationErrors
       ? Object.keys(state.leadForm.validationErrors)
       : [];
@@ -389,11 +389,11 @@ export default function ContactRoute() {
                           name="preferredContact"
                           value={method}
                           checked={formData.preferredContact === method}
-                          onChange={(e) =>
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             dispatch(
                               updateField({
                                 field: "preferredContact",
-                                value: e.target.value as any,
+                                value: e.target.value,
                               })
                             )
                           }
@@ -463,16 +463,9 @@ export default function ContactRoute() {
               {/* Contact Info */}
               <div className="bg-card rounded-xl p-6 shadow-card border border-border">
                 <h3 className="font-display text-lg font-semibold text-foreground mb-4">
-                  Prefer to Call?
+                  Reach us
                 </h3>
                 <div className="space-y-3">
-                  <a
-                    href="tel:+15035550123"
-                    className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
-                  >
-                    <Phone className="w-5 h-5 text-primary" />
-                    <span className="font-medium">(503) 555-0123</span>
-                  </a>
                   <a
                     href="mailto:info@stoneworkspdx.com"
                     className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"

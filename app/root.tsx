@@ -3,7 +3,15 @@ import type { LinksFunction, MetaFunction } from "react-router";
 import { useState, type ReactNode } from "react";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useNavigationType,
+  useLocation,
+} from "react-router";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -84,6 +92,9 @@ export function HydrateFallback() {
 }
 
 function Document({ children }: { children: ReactNode }) {
+  const navigationType = useNavigationType(); // "POP" | "PUSH" | "REPLACE"
+  const location = useLocation();
+
   return (
     <html lang="en">
       <head>
@@ -96,7 +107,15 @@ function Document({ children }: { children: ReactNode }) {
       <body>
         {children}
 
-        <ScrollRestoration />
+        <ScrollRestoration
+          getKey={(loc) => {
+            // Ключ для сохранения позиций:
+            // - для POP (back/forward) используем полноценный ключ, чтобы восстановить точно
+            // - для PUSH/REPLACE возвращаем уникальный ключ на каждый переход, чтобы "не подхватывать" прошлый скролл
+            if (navigationType === "REPLACE") return loc.key;
+            return `${loc.pathname}${loc.search}${Date.now()}`;
+          }}
+        />
         <Scripts />
       </body>
     </html>

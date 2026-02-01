@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { ClipboardCheck, Users, FileText, HardHat, CheckCircle } from 'lucide-react';
 
 const steps = [
@@ -45,17 +46,17 @@ export function Process() {
         {/* Steps */}
         <div className="relative">
           {/* Connection Line (desktop) */}
-          <div className="hidden lg:block absolute top-16 left-0 right-0 h-0.5 bg-border" />
+          <div className="hidden lg:block absolute top-8 lg:inset-x-24 xl:inset-x-32 h-0.5 bg-border" />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="relative text-center">
+              <div key={index} className={cn("relative text-center md:col-span-2 lg:col-span-1", index === 3 && "md:col-span-2 md:col-start-2", index === 4 && "md:col-span-2 md:col-start-4")}>
                 {/* Step Number & Icon */}
                 <div className="relative inline-block mb-4">
-                  <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto relative z-10">
+                  <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto relative z-0">
                     <step.icon className="w-7 h-7 text-primary-foreground" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-accent text-accent-foreground text-sm font-bold flex items-center justify-center">
+                  <div className="absolute -top-2 -left-2 z-1 w-7 h-7 rounded-full bg-accent text-accent-foreground text-sm font-bold flex items-center justify-center">
                     {index + 1}
                   </div>
                 </div>
