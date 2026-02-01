@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Colors - Light Theme */
+    --background: 0 0% 99%;
+    --foreground: 220 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+
+    /* Primary: Deep Teal */
+    --primary: 170 60% 30%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 170 60% 25%;
+    --primary-light: 170 45% 95%;
+
+    /* Secondary: Warm Stone/Slate */
+    --secondary: 35 15% 95%;
+    --secondary-foreground: 220 20% 20%;
+
+    /* Muted: Soft Gray */
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Accent: Brick/Terracotta */
+    --accent: 15 70% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 170 60% 30%;
+
+    --radius: 0.5rem;
+
+    /* Custom tokens */
+    --stone-50: 35 20% 98%;
+    --stone-100: 35 18% 95%;
+    --stone-200: 35 15% 90%;
+    --stone-300: 35 12% 80%;
+    --stone-400: 35 10% 60%;
+    --stone-500: 35 8% 45%;
+    --stone-600: 35 8% 35%;
+    --stone-700: 35 10% 25%;
+    --stone-800: 35 12% 18%;
+    --stone-900: 35 15% 12%;
+
+    /* Typography */
+    --font-display: 'Source Serif 4', Georgia, serif;
+    --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+    /* Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(220 20% 15% / 0.08);
+    --shadow-card: 0 4px 16px -4px hsl(220 20% 15% / 0.1);
+    --shadow-elevated: 0 8px 32px -8px hsl(220 20% 15% / 0.15);
+    --shadow-teal: 0 4px 20px -4px hsl(170 60% 30% / 0.25);
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(170 60% 30%) 0%, hsl(180 50% 25%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(35 20% 98%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-overlay: linear-gradient(180deg, transparent 0%, hsl(220 20% 15% / 0.7) 100%);
+
+    /* Sidebar (if needed) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 170 60% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 170 45% 95%;
+    --sidebar-accent-foreground: 170 60% 25%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 170 60% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Hero section specific styles */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .hero-overlay {
+    background: var(--gradient-overlay);
+  }
+
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-shadow-hover {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .shadow-teal {
+    box-shadow: var(--shadow-teal);
+  }
+
+  /* Container with consistent padding */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  /* Smooth image loading */
+  .img-loading {
+    @apply bg-muted animate-pulse;
+  }
+
+  /* Filter chip styles */
+  .filter-chip {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200;
+    @apply border border-border bg-background text-muted-foreground;
+    @apply hover:bg-primary-light hover:text-primary hover:border-primary/30;
+  }
+
+  .filter-chip-active {
+    @apply bg-primary text-primary-foreground border-primary;
+    @apply hover:bg-primary hover:text-primary-foreground;
+  }
+
+  /* Trust badge styles */
+  .trust-badge {
+    @apply flex items-center gap-2 text-sm;
+  }
+}
+
+@layer utilities {
+  /* Font utilities */
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-hero);
+  }
+}
