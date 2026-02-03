@@ -1,9 +1,5 @@
 import { Link } from "react-router";
-import {
-  Mail,
-  MapPin,
-  Clock,
-} from "lucide-react";
+import { Mail, MapPin, Clock } from "lucide-react";
 import { Logo } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 
@@ -50,7 +46,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Brand */}
           <div className="lg:col-span-5">
-            <Logo  className="-translate-y-[22px]"/>
+            <Logo className="-translate-y-[22px]" />
             <p className="text-stone-400 text-sm mb-6">
               Expert stone veneer, brick masonry, and repairs across Portland,
               OR and Vancouver, WA. Licensed, insured, and committed to
@@ -104,11 +100,11 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="mailto:info@stoneworkspdx.com"
+                  href="mailto:stoneworkspdx@agamalabs.com"
                   className="flex items-start gap-3 text-stone-400 hover:text-primary transition-colors text-sm"
                 >
                   <Mail className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                  <span>info@stoneworkspdx.com</span>
+                  <span>stoneworkspdx@agamalabs.com</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-stone-400 text-sm">
@@ -131,8 +127,8 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-stone-800">
         <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-500">
-          <p>© {currentYear} Stoneworks PDX. All rights reserved.</p>
-          <p>Privacy policy | Terms of Service</p>
+          <p>© {currentYear} Stoneworks PDX. All rights reserved</p>
+          <Link to={"/privacy"}>Privacy policy</Link>
         </div>
       </div>
     </footer>

@@ -464,11 +464,11 @@ export default function ContactRoute() {
                 </h3>
                 <div className="space-y-3">
                   <a
-                    href="mailto:info@stoneworkspdx.com"
+                    href="mailto:stoneworkspdx@agamalabs.com"
                     className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
                   >
                     <Mail className="w-5 h-5 text-primary" />
-                    <span className="font-medium">info@stoneworkspdx.com</span>
+                    <span className="font-medium">stoneworkspdx@agamalabs.com</span>
                   </a>
                   <div className="flex items-start gap-3 text-muted-foreground">
                     <Clock className="w-5 h-5 text-primary flex-shrink-0" />
