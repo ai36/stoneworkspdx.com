@@ -1,5 +1,5 @@
 import type { MetaFunction } from "react-router";
-
+import { BASE_URL } from "@/assets/constants";
 import { useState, type FormEvent } from "react";
 import {
   Mail,
@@ -9,7 +9,6 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { useAppDispatch, useAppSelector } from "@/../app/hooks";
 import { store } from "@/../app/store";
 import {
@@ -52,18 +50,17 @@ const whatHappensNext = [
   },
 ];
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Get a Free Estimate";
   const description =
     "Request a free, no-obligation estimate for your stone or brick project. Stone veneer contractor Portland OR, brick masonry Vancouver WA.";
-  const canonical = "/contact";
+  const canonical = `${BASE_URL}/contact`;
 
   return [
     { title },
     { name: "description", content: description },
-
     { tagName: "link", rel: "canonical", href: canonical },
-
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },

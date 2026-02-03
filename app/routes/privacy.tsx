@@ -1,23 +1,22 @@
 import type { MetaFunction } from "react-router";
+import { BASE_URL } from "@/assets/constants";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Privacy Policy";
   const description =
     "Stoneworks PDX privacy policy. Learn how we collect, use, and protect your personal information.";
-  const canonical = "/privacy";
+  const canonical = `${BASE_URL}/privacy`;
 
   return [
     { title },
     { name: "description", content: description },
-
-    { tagName: "link", rel: "canonical", href: canonical },
-
-    // как было `noIndex`
-    { name: "robots", content: "noindex" },
-
+    { tagName: "link", rel: "canonical", href: canonical },   
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
+    
+    { name: "robots", content: "noindex" },
   ];
 };
 

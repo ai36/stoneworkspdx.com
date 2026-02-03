@@ -1,23 +1,21 @@
 import type { MetaFunction } from "react-router";
-
+import { BASE_URL } from "@/assets/constants";
 import { Link } from "react-router";
 import { MapPin, ArrowRight } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { getAreasByState } from "@/data/serviceAreas";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Service Area";
   const description =
     "Stoneworks PDX serves Portland OR, Vancouver WA, and surrounding areas. Expert stone and brick masonry services in the greater Portland metro area.";
-  const canonical = "/service-area";
+  const canonical = `${BASE_URL}/service-area`;
 
   return [
     { title },
     { name: "description", content: description },
-
     { tagName: "link", rel: "canonical", href: canonical },
-
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
@@ -49,19 +47,8 @@ export default function ServiceAreaRoute() {
       {/* Map Placeholder */}
       <section className="py-8">
         <div className="container">
-          <div className="aspect-[16/9] md:aspect-[21/9] bg-stone-200 rounded-xl overflow-hidden relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
-                <p className="text-muted-foreground">
-                  Interactive map coming soon
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Portland, OR &amp; Vancouver, WA Metro Area
-                </p>
-              </div>
-            </div>
-            {/* You can embed a real Google Map here */}
+          <div className="aspect-[10/16] sm:aspect-[1/1] md:aspect-[21/9] bg-stone-200 rounded-xl overflow-hidden relative">
+            <iframe width="100%" height="100%" src="https://www.openstreetmap.org/export/embed.html?bbox=-122.84156799316408%2C45.46061022009265%2C-122.50511169433595%2C45.607791130167435&amp;layer=mapnik"></iframe>
           </div>
         </div>
       </section>

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/../app/hooks";
+import { Logo } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 import { setMobileMenuOpen } from "@/features/ui/uiSlice";
 import { cn } from "@/lib/utils";
-import { Logo } from "@/components/ui";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -80,7 +80,7 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className={cn("lg:hidden p-2 text-background", (scrolled || mobileMenuOpen) && "text-foreground")}
+            className={cn("lg:hidden p-2 text-background", (scrolled || mobileMenuOpen || !isMainPage) && "text-foreground")}
             onClick={() => dispatch(setMobileMenuOpen(!mobileMenuOpen))}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >

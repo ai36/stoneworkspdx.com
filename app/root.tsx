@@ -1,26 +1,17 @@
 import type { LinksFunction, MetaFunction } from "react-router";
-
 import { useState, type ReactNode } from "react";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useNavigationType,
-  useLocation,
-} from "react-router";
-
+import { Links, Meta, Outlet, Scripts } from "react-router";
+import { ScrollToTop } from "@/components/ui";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/layout";
 import { store } from "@/../app/store";
-
 import tailwindStylesHref from "./tailwind.css?url";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: tailwindStylesHref },
@@ -42,17 +33,14 @@ export const links: LinksFunction = () => {
   ];
 };
 
-/**
- * Базовые мета по умолчанию.
- * Page-level meta (из app/routes/*.tsx) будет дополнять/переопределять title/description.
- */
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   return [
     { title: "Stoneworks PDX" },
     {
       name: "description",
       content:
-        "Stone veneer and brick masonry contractor serving Portland, OR and Vancouver, WA.",
+        "Stone veneer and brick masonry contractor serving Portland, OR and Vancouver, WA",
     },
     { property: "og:type", content: "website" },
   ];
@@ -68,7 +56,6 @@ export default function Root() {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-
             <Layout>
               <Outlet />
             </Layout>
@@ -79,10 +66,6 @@ export default function Root() {
   );
 }
 
-/**
- * (Опционально) fallback пока идут loader-данные / гидрация.
- * Можно удалить, если не нужен.
- */
 export function HydrateFallback() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
@@ -92,30 +75,18 @@ export function HydrateFallback() {
 }
 
 function Document({ children }: { children: ReactNode }) {
-  const navigationType = useNavigationType(); // "POP" | "PUSH" | "REPLACE"
-  const location = useLocation();
-
   return (
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <Meta />
         <Links />
       </head>
       <body>
         {children}
 
-        <ScrollRestoration
-          getKey={(loc) => {
-            // Ключ для сохранения позиций:
-            // - для POP (back/forward) используем полноценный ключ, чтобы восстановить точно
-            // - для PUSH/REPLACE возвращаем уникальный ключ на каждый переход, чтобы "не подхватывать" прошлый скролл
-            if (navigationType === "REPLACE") return loc.key;
-            return `${loc.pathname}${loc.search}${Date.now()}`;
-          }}
-        />
+        <ScrollToTop />
         <Scripts />
       </body>
     </html>
