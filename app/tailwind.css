@@ -87,11 +87,14 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-height: 100%;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {

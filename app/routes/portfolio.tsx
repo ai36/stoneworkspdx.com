@@ -1,11 +1,10 @@
 import type { MetaFunction } from "react-router";
-
+import { BASE_URL } from "@/assets/constants";
 import { useEffect } from "react";
 import { Link } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Thumbs, A11y } from "swiper/modules";
 import { X, MapPin, CheckCircle } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/../app/hooks";
 import {
@@ -16,7 +15,6 @@ import {
 } from "@/features/portfolio/portfolioSlice";
 import { categoryLabels, type PortfolioCategory } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -31,18 +29,17 @@ const filterOptions: (PortfolioCategory | "all")[] = [
   "exteriors",
 ];
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Our Portfolio";
   const description =
     "Browse our portfolio of stone veneer, brick masonry, and fireplace projects in Portland OR and Vancouver WA. See our craftsmanship in action.";
-  const canonical = "/portfolio";
+  const canonical = `${BASE_URL}/portfolio`;
 
   return [
     { title },
     { name: "description", content: description },
-
     { tagName: "link", rel: "canonical", href: canonical },
-
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },

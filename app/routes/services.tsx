@@ -1,7 +1,6 @@
 import type { MetaFunction } from "react-router";
-
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { BASE_URL } from "@/assets/constants";
+import { Link } from "react-router";
 import {
   Mountain,
   Flame,
@@ -12,31 +11,29 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { services } from "@/data/services";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  mountain: Mountain,
-  flame: Flame,
-  home: Home,
-  wrench: Wrench,
-  hammer: Hammer,
+  "mountain": Mountain,
+  "flame": Flame,
+  "home": Home,
+  "wrench": Wrench,
+  "hammer": Hammer,
   "brick-wall": Building,
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Stone & Brick Masonry Services";
   const description =
     "Stone veneer installation, brick masonry, fireplace surrounds, exterior facades, masonry repair, and tuckpointing services in Portland OR and Vancouver WA.";
-  const canonical = "/services";
+  const canonical = `${BASE_URL}/services`;
 
   return [
     { title },
     { name: "description", content: description },
-
     { tagName: "link", rel: "canonical", href: canonical },
-
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
@@ -44,22 +41,6 @@ export const meta: MetaFunction = () => {
 };
 
 export default function ServicesRoute() {
-  const location = useLocation();
-
-  // Scroll to service section if hash is present (client-only)
-  useEffect(() => {
-    if (!location.hash) return;
-
-    const element = document.querySelector(location.hash);
-    if (!element) return;
-
-    const id = window.setTimeout(() => {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
-
-    return () => window.clearTimeout(id);
-  }, [location.hash]);
-
   return (
     <>
       {/* Hero */}

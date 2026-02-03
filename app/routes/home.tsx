@@ -1,5 +1,5 @@
 import type { MetaFunction } from "react-router";
-
+import { BASE_URL } from "@/assets/constants";
 import {
   Hero,
   ServicesPreview,
@@ -10,23 +10,17 @@ import {
   ServiceAreaSnippet,
 } from "@/components/sections";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Stone Veneer & Brick Masonry Contractor";
   const description =
     "Expert stone veneer, brick masonry, and repairs in Portland OR and Vancouver WA. Licensed & insured. Free estimates. Quality craftsmanship since day one.";
-
-  // Canonical лучше задавать абсолютным URL, но базовый origin зависит от окружения.
-  // Пока оставляем относительный canonical; позже (когда появится ENV/host) сделаем абсолютным.
-  const canonical = "/";
+  const canonical = `${BASE_URL}/`;
 
   return [
     { title },
     { name: "description", content: description },
-
-    // canonical
     { tagName: "link", rel: "canonical", href: canonical },
-
-    // OpenGraph (минимум для шаринга)
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },

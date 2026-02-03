@@ -1,10 +1,9 @@
 import type { MetaFunction } from "react-router";
-
 import { Link } from "react-router";
 import { Home } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const meta: MetaFunction = () => {
   const title = "Page Not Found";
 

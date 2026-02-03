@@ -4,8 +4,8 @@ import {
   MapPin,
   Clock,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 
 const quickLinks = [
   { href: "/services", label: "Our Services" },
