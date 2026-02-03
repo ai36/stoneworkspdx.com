@@ -114,7 +114,7 @@ export default function PrivacyRoute() {
             <p className="text-muted-foreground mb-6 leading-relaxed">
               You have the right to access, correct, or delete your personal
               information. To exercise these rights, please contact us at
-              info@stoneworkspdx.com.
+              stoneworkspdx@agamalabs.com
             </p>
 
             <h2 className="font-display text-2xl font-semibold text-foreground mb-4 mt-8">
@@ -143,8 +143,7 @@ export default function PrivacyRoute() {
               us:
             </p>
             <ul className="text-muted-foreground mb-6 space-y-1">
-              <li>Email: info@stoneworkspdx.com</li>
-              <li>Phone: (503) 555-0123</li>
+              <li>Email: stoneworkspdx@agamalabs.com</li>
               <li>Address: Portland, OR</li>
             </ul>
           </div>

@@ -23,7 +23,8 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 React
 Redux Toolkit
-React-router with framework
+React-router (data router) + SSR
 Tailwind CSS
 Radix-UI
 Lucide (Icons for React)
+Vite
