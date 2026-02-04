@@ -7,6 +7,7 @@ export default [
   route("service-area", "routes/service-area.tsx"),
   route("contact", "routes/contact.tsx"),
   route("privacy", "routes/privacy.tsx"),
+  route("api/lead", "routes/api.lead.ts"),
 
   // catch-all
   route("*", "routes/not-found.tsx"),
