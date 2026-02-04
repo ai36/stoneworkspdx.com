@@ -18,6 +18,7 @@ function isSeoRoutePath(rawPath: string): boolean {
   if (rawPath.startsWith("api/")) return false;
   if (rawPath === "robots.txt") return false;
   if (rawPath === "sitemap.xml") return false;
+  if (rawPath.startsWith("privacy")) return false;
   if (rawPath.includes(":")) return false;
   return true;
 }
