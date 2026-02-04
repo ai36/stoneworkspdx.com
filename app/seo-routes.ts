@@ -17,7 +17,13 @@ function isIndexRoute(route: RouteConfig) {
 }
 
 function isSeoPath(path: string) {
-  return !path.startsWith("api/") && path !== "*" && !path.includes(":");
+  return (
+    !path.startsWith("api/") &&
+    path !== "*" &&
+    path !== "robots.txt" &&
+    path !== "sitemap.xml" &&
+    !path.includes(":")
+  );
 }
 
 export const seoRoutes: SeoRoute[] = (routes as readonly RouteConfig[])
