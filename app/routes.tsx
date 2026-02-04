@@ -7,7 +7,11 @@ export default [
   route("service-area", "routes/service-area.tsx"),
   route("contact", "routes/contact.tsx"),
   route("privacy", "routes/privacy.tsx"),
+  
+  // resource/api routes
   route("api/lead", "routes/api.lead.ts"),
+  route("robots.txt", "routes/robots[.]txt.ts"),
+  route("sitemap.xml", "routes/sitemap[.]xml.ts"),
 
   // catch-all
   route("*", "routes/not-found.tsx"),
