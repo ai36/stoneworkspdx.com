@@ -29,6 +29,9 @@ type Pages = {
   "/privacy": {
     params: {};
   };
+  "/api/lead": {
+    params: {};
+  };
   "/*": {
     params: {
       "*": string;
@@ -39,7 +42,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/services" | "/portfolio" | "/service-area" | "/contact" | "/privacy" | "/*";
+    page: "/" | "/services" | "/portfolio" | "/service-area" | "/contact" | "/privacy" | "/api/lead" | "/*";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -65,6 +68,10 @@ type RouteFiles = {
     id: "routes/privacy";
     page: "/privacy";
   };
+  "routes/api.lead.ts": {
+    id: "routes/api.lead";
+    page: "/api/lead";
+  };
   "routes/not-found.tsx": {
     id: "routes/not-found";
     page: "/*";
@@ -79,5 +86,6 @@ type RouteModules = {
   "routes/service-area": typeof import("./app/routes/service-area.tsx");
   "routes/contact": typeof import("./app/routes/contact.tsx");
   "routes/privacy": typeof import("./app/routes/privacy.tsx");
+  "routes/api.lead": typeof import("./app/routes/api.lead.ts");
   "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };
