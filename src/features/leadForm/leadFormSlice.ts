@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { MAX_PHOTO_FILES, MAX_PHOTO_SIZE_BYTES } from "@/assets/constants";
 
 export interface LeadFormData {
   fullName: string;
@@ -19,6 +20,7 @@ export interface ValidationErrors {
   cityZip?: string;
   serviceType?: string;
   projectDescription?: string;
+  photos?: string;
 }
 
 interface LeadFormState {
@@ -52,14 +54,15 @@ const initialState: LeadFormState = {
 // Validation helpers
 const validatePhone = (phone: string): boolean => {
   const phoneRegex =
-  // eslint-disable-next-line no-useless-escape
+    // eslint-disable-next-line no-useless-escape
     /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
   return phoneRegex.test(phone.replace(/\s/g, ""));
 };
 
 const validateEmail = (email: string): boolean => {
   // eslint-disable-next-line no-useless-escape
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex =
+   /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
@@ -67,37 +70,38 @@ const validateEmail = (email: string): boolean => {
 export const submitLeadForm = createAsyncThunk(
   "leadForm/submit",
   async (formData: LeadFormData, { rejectWithValue }) => {
-    // Honeypot check - bots typically fill hidden fields
-    if (formData.honeypot) {
-      return rejectWithValue("Spam detected");
-    }
+    if (formData.honeypot) return rejectWithValue("Spam detected");
 
-    // Simulate API call - replace with actual endpoint
     try {
-      // In production, this would be:
-      // const response = await fetch('/api/lead', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
+      const fd = new FormData();
+      fd.append("fullName", formData.fullName);
+      fd.append("phone", formData.phone);
+      fd.append("email", formData.email);
+      fd.append("cityZip", formData.cityZip);
+      fd.append("serviceType", formData.serviceType);
+      fd.append("projectDescription", formData.projectDescription);
+      fd.append("preferredContact", formData.preferredContact);
 
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Simulate success (90% success rate for demo)
-      if (Math.random() > 0.1) {
-        return {
-          success: true,
-          message:
-            "Thanks! We'll contact you within 24 hours to schedule your free estimate.",
-        };
-      } else {
-        throw new Error("Server error");
+      for (const file of formData.photos) {
+        fd.append("photos", file);
       }
-    } catch (error) {
-      return rejectWithValue(
-        "Something went wrong. Please call us directly at (503) 555-0123.",
-      );
+
+      const res = await fetch("/api/lead", { method: "POST", body: fd });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        return rejectWithValue(
+          data?.error || "Failed to submit. Please try again.",
+        );
+      }
+
+      return {
+        success: true,
+        message:
+          "Thanks! We'll contact you within 24 hours to schedule your free estimate.",
+      };
+    } catch {
+      return rejectWithValue("Network error. Please try again.");
     }
   },
 );
@@ -156,6 +160,15 @@ const leadFormSlice = createSlice({
 
       if (!formData.serviceType) {
         errors.serviceType = "Please select a service type";
+      }
+
+      if (formData.photos.length > MAX_PHOTO_FILES) {
+        errors.photos = `Max ${MAX_PHOTO_FILES} photos allowed.`;
+      } else {
+        const tooBig = formData.photos.find(
+          (f) => f.size > MAX_PHOTO_SIZE_BYTES,
+        );
+        if (tooBig) errors.photos = `File "${tooBig.name}" is larger than 5MB.`;
       }
 
       if (!formData.projectDescription.trim()) {

@@ -1,5 +1,9 @@
 import type { MetaFunction } from "react-router";
-import { BASE_URL } from "@/assets/constants";
+import {
+  BASE_URL,
+  MAX_PHOTO_FILES,
+  MAX_PHOTO_SIZE_BYTES,
+} from "@/assets/constants";
 import { useState, type FormEvent } from "react";
 import {
   Mail,
@@ -25,6 +29,7 @@ import { store } from "@/../app/store";
 import {
   updateField,
   validateForm,
+  setValidationError,
   submitLeadForm,
   resetForm,
   type ValidationErrors,
@@ -76,13 +81,11 @@ export default function ContactRoute() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // 1) Запускаем валидацию
     dispatch(validateForm());
 
-    // 2) Читаем АКТУАЛЬНЫЕ ошибки из store (а не из замыкания)
-    //    Это убирает "гонки" и делает submit предсказуемым.
-    const state = store.getState() as { leadForm: { validationErrors: ValidationErrors } };
+    const state = store.getState() as {
+      leadForm: { validationErrors: ValidationErrors };
+    };
     const errors = state.leadForm?.validationErrors
       ? Object.keys(state.leadForm.validationErrors)
       : [];
@@ -94,11 +97,35 @@ export default function ContactRoute() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const fileArray = Array.from(files);
-      setPhotoNames(fileArray.map((f) => f.name));
-      dispatch(updateField({ field: "photos", value: fileArray }));
+    if (!files) return;
+
+    const fileArray = Array.from(files);
+
+    if (fileArray.length > MAX_PHOTO_FILES) {
+      dispatch(
+        setValidationError({
+          field: "photos",
+          message: `Max ${MAX_PHOTO_FILES} photos allowed.`,
+        }),
+      );
+      e.target.value = "";
+      return;
     }
+
+    const tooBig = fileArray.find((f) => f.size > MAX_PHOTO_SIZE_BYTES);
+    if (tooBig) {
+      dispatch(
+        setValidationError({
+          field: "photos",
+          message: `File "${tooBig.name}" is larger than 5MB.`,
+        }),
+      );
+      e.target.value = "";
+      return;
+    }
+
+    setPhotoNames(fileArray.map((f) => f.name));
+    dispatch(updateField({ field: "photos", value: fileArray }));
   };
 
   // Success state
@@ -159,7 +186,10 @@ export default function ContactRoute() {
                     value={formData.honeypot}
                     onChange={(e) =>
                       dispatch(
-                        updateField({ field: "honeypot", value: e.target.value })
+                        updateField({
+                          field: "honeypot",
+                          value: e.target.value,
+                        }),
                       )
                     }
                     tabIndex={-1}
@@ -180,11 +210,11 @@ export default function ContactRoute() {
                           updateField({
                             field: "fullName",
                             value: e.target.value,
-                          })
+                          }),
                         )
                       }
                       className={cn(
-                        validationErrors.fullName && "border-destructive"
+                        validationErrors.fullName && "border-destructive",
                       )}
                       placeholder="John Smith"
                     />
@@ -203,11 +233,14 @@ export default function ContactRoute() {
                       value={formData.phone}
                       onChange={(e) =>
                         dispatch(
-                          updateField({ field: "phone", value: e.target.value })
+                          updateField({
+                            field: "phone",
+                            value: e.target.value,
+                          }),
                         )
                       }
                       className={cn(
-                        validationErrors.phone && "border-destructive"
+                        validationErrors.phone && "border-destructive",
                       )}
                       placeholder="(503) 555-0123"
                     />
@@ -230,11 +263,14 @@ export default function ContactRoute() {
                       value={formData.email}
                       onChange={(e) =>
                         dispatch(
-                          updateField({ field: "email", value: e.target.value })
+                          updateField({
+                            field: "email",
+                            value: e.target.value,
+                          }),
                         )
                       }
                       className={cn(
-                        validationErrors.email && "border-destructive"
+                        validationErrors.email && "border-destructive",
                       )}
                       placeholder="john@example.com"
                     />
@@ -256,11 +292,11 @@ export default function ContactRoute() {
                           updateField({
                             field: "cityZip",
                             value: e.target.value,
-                          })
+                          }),
                         )
                       }
                       className={cn(
-                        validationErrors.cityZip && "border-destructive"
+                        validationErrors.cityZip && "border-destructive",
                       )}
                       placeholder="Portland, OR or 97201"
                     />
@@ -284,7 +320,7 @@ export default function ContactRoute() {
                   >
                     <SelectTrigger
                       className={cn(
-                        validationErrors.serviceType && "border-destructive"
+                        validationErrors.serviceType && "border-destructive",
                       )}
                     >
                       <SelectValue placeholder="Select a service" />
@@ -319,12 +355,13 @@ export default function ContactRoute() {
                         updateField({
                           field: "projectDescription",
                           value: e.target.value,
-                        })
+                        }),
                       )
                     }
                     className={cn(
                       "min-h-[120px]",
-                      validationErrors.projectDescription && "border-destructive"
+                      validationErrors.projectDescription &&
+                        "border-destructive",
                     )}
                     placeholder="Tell us about your project. What are you looking to build or repair? Any specific materials or style preferences?"
                   />
@@ -342,7 +379,12 @@ export default function ContactRoute() {
                   <div className="mt-1">
                     <label
                       htmlFor="photos"
-                      className="flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary transition-colors"
+                      className={cn(
+                        "flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed rounded-lg cursor-pointer hover:border-primary transition-colors",
+                        validationErrors.photos
+                          ? "border-destructive"
+                          : "border-border",
+                      )}
                     >
                       <Upload className="w-5 h-5 text-muted-foreground" />
                       <span className="text-muted-foreground">
@@ -351,6 +393,7 @@ export default function ContactRoute() {
                           : "Click to upload photos of your project"}
                       </span>
                     </label>
+
                     <input
                       id="photos"
                       type="file"
@@ -360,10 +403,18 @@ export default function ContactRoute() {
                       className="hidden"
                     />
                   </div>
+
                   {photoNames.length > 0 && (
                     <div className="mt-2 text-sm text-muted-foreground">
                       {photoNames.join(", ")}
                     </div>
+                  )}
+
+                  {validationErrors.photos && (
+                    <p className="text-sm text-destructive mt-2 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {validationErrors.photos}
+                    </p>
                   )}
                 </div>
 
@@ -378,7 +429,7 @@ export default function ContactRoute() {
                           "flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer transition-colors",
                           formData.preferredContact === method
                             ? "border-primary bg-primary-light"
-                            : "border-border hover:border-primary/50"
+                            : "border-border hover:border-primary/50",
                         )}
                       >
                         <input
@@ -391,7 +442,7 @@ export default function ContactRoute() {
                               updateField({
                                 field: "preferredContact",
                                 value: e.target.value,
-                              })
+                              }),
                             )
                           }
                           className="sr-only"
@@ -468,7 +519,9 @@ export default function ContactRoute() {
                     className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
                   >
                     <Mail className="w-5 h-5 text-primary" />
-                    <span className="font-medium">stoneworkspdx@agamalabs.com</span>
+                    <span className="font-medium">
+                      stoneworkspdx@agamalabs.com
+                    </span>
                   </a>
                   <div className="flex items-start gap-3 text-muted-foreground">
                     <Clock className="w-5 h-5 text-primary flex-shrink-0" />
