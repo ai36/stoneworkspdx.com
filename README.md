@@ -21,10 +21,10 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ## Tech Stack
 
-React
-Redux Toolkit
-React-router (data router) + SSR
-Tailwind CSS
-Radix-UI
-Lucide (Icons for React)
-Vite
+- React
+- Redux Toolkit
+- React-router (data router) + SSR
+- Tailwind CSS
+- Radix-UI
+- Lucide (Icons for React)
+- Vite

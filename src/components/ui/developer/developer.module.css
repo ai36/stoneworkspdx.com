@@ -1,0 +1,35 @@
+.devBox {
+  color: #cccccc;
+  background-color: #101010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .devLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+
+    @media (width < 480px) {
+      flex-direction: column;
+    }
+
+    .devLogo {
+      height: 24px;
+      width: auto;
+    }
+
+    .devText {
+      white-space: nowrap;
+      font-size: 14px;
+      transform: translateY(2px);
+
+      & span {
+        @media (width < 480px) {
+          display: none;
+        }
+      }
+    }
+  }
+}

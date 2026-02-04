@@ -3,7 +3,7 @@ import { useState, type ReactNode } from "react";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Links, Meta, Outlet, Scripts } from "react-router";
-import { ScrollToTop } from "@/components/ui";
+import { Developer, ScrollToTop } from "@/components/ui";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -114,6 +114,7 @@ function Document({ children }: { children: ReactNode }) {
         </noscript>
         {children}
 
+        <Developer />
         <ScrollToTop />
         <Scripts />
       </body>
