@@ -1,28 +1,27 @@
 import { MAX_PHOTO_FILES, MAX_PHOTO_SIZE_BYTES } from "@/assets/constants";
 
+// Если у вас именно edge в framework-роутах поддерживается — оставьте.
+// Если начнутся проблемы на Vercel, уберите и будет node runtime.
+export const config = { runtime: "edge" };
+
+const json = (status: number, body: unknown) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8" },
+  });
+
 export async function action({ request }: { request: Request }) {
-  if (request.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405 });
-  }
+  if (request.method !== "POST") return json(405, { error: "Method not allowed" });
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  if (!token || !chatId) {
-    return new Response(JSON.stringify({ error: "Server is not configured" }), {
-      status: 500,
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
-  }
+  if (!token || !chatId) return json(500, { error: "Server is not configured" });
 
   let fd: FormData;
   try {
     fd = await request.formData();
   } catch {
-    return new Response(JSON.stringify({ error: "Invalid form data" }), {
-      status: 400,
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
+    return json(400, { error: "Invalid form data" });
   }
 
   const fullName = String(fd.get("fullName") || "");
@@ -36,24 +35,14 @@ export async function action({ request }: { request: Request }) {
   const photos = fd.getAll("photos").filter((x) => x instanceof File) as File[];
 
   if (photos.length > MAX_PHOTO_FILES) {
-    return new Response(JSON.stringify({ error: `Too many files. Max is ${MAX_PHOTO_FILES}.` }), {
-      status: 400,
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
+    return json(400, { error: `Too many files. Max is ${MAX_PHOTO_FILES}.` });
   }
-
   for (const f of photos) {
     if (f.size > MAX_PHOTO_SIZE_BYTES) {
-      return new Response(JSON.stringify({ error: `File "${f.name}" is larger than 5MB.` }), {
-        status: 400,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return json(400, { error: `File "${f.name}" is larger than 5MB.` });
     }
     if (!f.type.startsWith("image/")) {
-      return new Response(JSON.stringify({ error: `File "${f.name}" is not an image.` }), {
-        status: 400,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return json(400, { error: `File "${f.name}" is not an image.` });
     }
   }
 
@@ -70,7 +59,6 @@ export async function action({ request }: { request: Request }) {
 
   const apiBase = `https://api.telegram.org/bot${token}`;
 
-  // 1) sendMessage
   const msgRes = await fetch(`${apiBase}/sendMessage`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -78,17 +66,16 @@ export async function action({ request }: { request: Request }) {
   });
 
   if (!msgRes.ok) {
-    const details = await msgRes.text().catch(() => "");
-    return new Response(JSON.stringify({ error: "Telegram sendMessage failed", details }), {
-      status: 502,
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
+    const errText = await msgRes.text().catch(() => "");
+    return json(502, { error: "Telegram sendMessage failed", details: errText });
   }
 
-  // 2) sendMediaGroup (optional)
   if (photos.length > 0) {
     const tgFd = new FormData();
-    const media = photos.map((_, i) => ({ type: "photo", media: `attach://photo${i}` }));
+    const media = photos.map((_, i) => ({
+      type: "photo",
+      media: `attach://photo${i}`,
+    }));
 
     tgFd.append("chat_id", chatId);
     tgFd.append("media", JSON.stringify(media));
@@ -100,21 +87,10 @@ export async function action({ request }: { request: Request }) {
     });
 
     if (!mediaRes.ok) {
-      const details = await mediaRes.text().catch(() => "");
-      return new Response(JSON.stringify({ error: "Telegram sendMediaGroup failed", details }), {
-        status: 502,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      const errText = await mediaRes.text().catch(() => "");
+      return json(502, { error: "Telegram sendMediaGroup failed", details: errText });
     }
   }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { "content-type": "application/json; charset=utf-8" },
-  });
-}
-
-// (необязательно) чтобы GET не работал и не пытался рендерить страницу:
-export function loader() {
-  return new Response("Not Found", { status: 404 });
+  return json(200, { ok: true });
 }
