@@ -35,7 +35,6 @@
     .devText {
       white-space: nowrap;
       font-size: 14px;
-      transform: translateY(1px);
 
       & span {
         @media (width < 480px) {
