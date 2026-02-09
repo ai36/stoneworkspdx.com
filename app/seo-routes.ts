@@ -35,7 +35,7 @@ export const seoRoutes: SeoRoute[] = (routes as readonly RouteConfig[])
     const path = rawPath === "" ? "/" : `/${rawPath}`;
     return {
       path,
-      changefreq: path === "/" ? "weekly" : "monthly",
-      priority: path === "/" ? 1.0 : 0.7,
+      changefreq: path === "/" ? "weekly" : "weekly",
+      priority: path === "/" ? 1.0 : 0.8,
     };
   });
