@@ -14,7 +14,7 @@ import {
 export const meta: MetaFunction = () => {
   const title = "Stone Veneer & Brick Masonry Contractor";
   const description =
-    "Expert stone veneer, brick masonry, and repairs in Portland OR and Vancouver WA. Licensed & insured. Free estimates. Quality craftsmanship since day one.";
+    "Expert stone veneer, brick masonry, and repairs in Portland OR and Vancouver WA. Free estimates. Quality craftsmanship since day one.";
   const canonical = `${BASE_URL}/`;
 
   return [

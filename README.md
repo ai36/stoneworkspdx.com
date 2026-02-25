@@ -1,16 +1,14 @@
 # Stone Works PDX
 
+Stone Works PDX - local contractor for stone and bricks works - [https://stoneworkspdx.vercel.com](https://stoneworkspdx.vercel.com/?utm_source=github&utm_medium=readme)
 
-
-## Stone Works PDX - local contractor for stone and bricks works - https://stoneworkspdx.vercel.com
-
-### Installation & control
+## Installation & control
 
 ```sh
 npm i
 ```
 
-### Dev-mode
+## Dev-mode
 
 ```sh
 npm run dev
