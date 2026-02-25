@@ -32,6 +32,12 @@ type Pages = {
   "/api/lead": {
     params: {};
   };
+  "/robots.txt": {
+    params: {};
+  };
+  "/sitemap.xml": {
+    params: {};
+  };
   "/*": {
     params: {
       "*": string;
@@ -42,7 +48,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/services" | "/portfolio" | "/service-area" | "/contact" | "/privacy" | "/api/lead" | "/*";
+    page: "/" | "/services" | "/portfolio" | "/service-area" | "/contact" | "/privacy" | "/api/lead" | "/robots.txt" | "/sitemap.xml" | "/*";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -72,6 +78,14 @@ type RouteFiles = {
     id: "routes/api.lead";
     page: "/api/lead";
   };
+  "routes/robots[.]txt.ts": {
+    id: "routes/robots[.]txt";
+    page: "/robots.txt";
+  };
+  "routes/sitemap[.]xml.ts": {
+    id: "routes/sitemap[.]xml";
+    page: "/sitemap.xml";
+  };
   "routes/not-found.tsx": {
     id: "routes/not-found";
     page: "/*";
@@ -87,5 +101,7 @@ type RouteModules = {
   "routes/contact": typeof import("./app/routes/contact.tsx");
   "routes/privacy": typeof import("./app/routes/privacy.tsx");
   "routes/api.lead": typeof import("./app/routes/api.lead.ts");
+  "routes/robots[.]txt": typeof import("./app/routes/robots[.]txt.ts");
+  "routes/sitemap[.]xml": typeof import("./app/routes/sitemap[.]xml.ts");
   "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };
