@@ -10,6 +10,7 @@ export const Logo = ({ scrolled = false, className }: LogoProps) => {
   return (
     <Link
       to="/"
+      aria-label="Stoneworks PDX — Home"
       className={cn(
         "flex items-center gap-2 w-[240px]",
         scrolled ? "text-foreground" : "text-background",

@@ -1,9 +1,7 @@
 import type { MetaFunction } from "react-router";
 import { BASE_URL } from "@/assets/constants";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Link } from "react-router";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Thumbs, A11y } from "swiper/modules";
 import { X, MapPin, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/../app/hooks";
@@ -14,11 +12,10 @@ import {
   selectSelectedProject,
 } from "@/features/portfolio/portfolioSlice";
 import { categoryLabels, type PortfolioCategory } from "@/data/portfolio";
+import { responsiveImage } from "@/assets/responsive-images";
 import { cn } from "@/lib/utils";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/thumbs";
+
+const ProjectCarousel = lazy(() => import("@/components/portfolio/ProjectCarousel"));
 
 const filterOptions: (PortfolioCategory | "all")[] = [
   "all",
@@ -127,6 +124,8 @@ export default function PortfolioRoute() {
               >
                 <img
                   src={item.images[0]}
+                  {...responsiveImage(item.images[0], "(min-width: 1400px) 440px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw")}
+                  decoding="async"
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
@@ -180,22 +179,11 @@ export default function PortfolioRoute() {
 
             {/* Image Carousel */}
             <div className="relative">
-              <Swiper
-                modules={[Navigation, Pagination, Thumbs, A11y]}
-                navigation
-                pagination={{ clickable: true }}
-                className="aspect-video rounded-t-2xl"
-              >
-                {selectedProject.images.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <img
-                      src={image}
-                      alt={`${selectedProject.title} - Image ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <Suspense fallback={
+                <img src={selectedProject.images[0]} {...responsiveImage(selectedProject.images[0], "(min-width: 896px) 896px, 100vw")} alt={selectedProject.title} className="w-full aspect-video object-cover rounded-t-2xl" />
+              }>
+                <ProjectCarousel images={selectedProject.images} title={selectedProject.title} />
+              </Suspense>
             </div>
 
             {/* Project Details */}

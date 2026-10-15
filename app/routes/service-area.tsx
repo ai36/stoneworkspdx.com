@@ -48,7 +48,7 @@ export default function ServiceAreaRoute() {
       <section className="py-8">
         <div className="container">
           <div className="aspect-[10/16] sm:aspect-[1/1] md:aspect-[21/9] bg-stone-200 rounded-xl overflow-hidden relative">
-            <iframe width="100%" height="100%" src="https://www.openstreetmap.org/export/embed.html?bbox=-122.84156799316408%2C45.46061022009265%2C-122.50511169433595%2C45.607791130167435&amp;layer=mapnik"></iframe>
+            <iframe title="Portland and Vancouver service area map" loading="lazy" width="100%" height="100%" src="https://www.openstreetmap.org/export/embed.html?bbox=-122.84156799316408%2C45.46061022009265%2C-122.50511169433595%2C45.607791130167435&layer=mapnik"></iframe>
           </div>
         </div>
       </section>

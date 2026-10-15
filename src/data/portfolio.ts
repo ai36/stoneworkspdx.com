@@ -1,14 +1,14 @@
-import exteriorStone1 from '@/assets/portfolio/exterior-stone-1.jpg';
-import brickFireplace1 from '@/assets/portfolio/brick-fireplace-1.jpg';
-import accentWall1 from '@/assets/portfolio/accent-wall-1.jpg';
-import brickRepair1 from '@/assets/portfolio/brick-repair-1.jpg';
-import outdoorKitchen1 from '@/assets/portfolio/outdoor-kitchen-1.jpg';
-import stoneFireplace2 from '@/assets/portfolio/stone-fireplace-2.jpg';
-import commercialExterior1 from '@/assets/portfolio/commercial-exterior-1.jpg';
-import retainingWall1 from '@/assets/portfolio/retaining-wall-1.jpg';
-import stoneColumns1 from '@/assets/portfolio/stone-columns-1.jpg';
-import brickMailbox1 from '@/assets/portfolio/brick-mailbox-1.jpg';
-import fireplaceHearth1 from '@/assets/portfolio/fireplace-hearth-1.jpg';
+import exteriorStone1 from '@/assets/optimized/exterior-stone-1-1024.webp';
+import brickFireplace1 from '@/assets/optimized/brick-fireplace-1-1024.webp';
+import accentWall1 from '@/assets/optimized/accent-wall-1-1024.webp';
+import brickRepair1 from '@/assets/optimized/brick-repair-1-1024.webp';
+import outdoorKitchen1 from '@/assets/optimized/outdoor-kitchen-1-1024.webp';
+import stoneFireplace2 from '@/assets/optimized/stone-fireplace-2-1024.webp';
+import commercialExterior1 from '@/assets/optimized/commercial-exterior-1-1024.webp';
+import retainingWall1 from '@/assets/optimized/retaining-wall-1-1024.webp';
+import stoneColumns1 from '@/assets/optimized/stone-columns-1-1024.webp';
+import brickMailbox1 from '@/assets/optimized/brick-mailbox-1-1024.webp';
+import fireplaceHearth1 from '@/assets/optimized/fireplace-hearth-1-1024.webp';
 
 export type PortfolioCategory = 
   | 'stone-veneer'
