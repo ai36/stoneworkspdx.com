@@ -29,7 +29,7 @@ export function Footer() {
           <h2 className="font-display text-2xl md:text-3xl font-semibold text-primary-foreground mb-4">
             Ready to Transform Your Space?
           </h2>
-          <p className="text-primary-foreground/80 mb-6 max-w-xl mx-auto">
+          <p className="text-primary-foreground mb-6 max-w-xl mx-auto">
             Get a free, no-obligation estimate for your stone or brick project.
             We'll visit your home and provide a detailed quote within 48 hours.
           </p>
@@ -126,7 +126,7 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-stone-800">
-        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-500">
+        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-400">
           <p>© {currentYear} Stoneworks PDX. All rights reserved</p>
           <Link to={"/privacy"}>Privacy policy</Link>
         </div>

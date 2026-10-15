@@ -26,3 +26,7 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 - Radix-UI
 - Lucide (Icons for React)
 - Vite
+
+## Performance and images
+
+Run `npm run images:generate` after updating source photos, and commit the generated WebP files. See [performance notes](docs/performance.md) for measurements and validation.

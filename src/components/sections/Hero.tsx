@@ -1,7 +1,11 @@
 import { Link } from 'react-router';
 import { ArrowRight, Clock, FileText, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-fireplace.jpg';
+import heroImage from '@/assets/optimized/hero-fireplace-1920.webp';
+import mobileHeroSmall from '@/assets/optimized/hero-fireplace-mobile-320.webp';
+import mobileHero from '@/assets/optimized/hero-fireplace-mobile-540.webp';
+
+import { responsiveImage } from '@/assets/responsive-images';
 
 const trustBadges = [
   // { icon: Shield, text: 'Licensed & Insured' },
@@ -15,11 +19,17 @@ export function Hero() {
     <section className="relative min-h-dvh p-10 flex items-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
+        <picture className="block w-full h-full">
+          <source media="(max-width: 640px) and (orientation: portrait)" srcSet={`${mobileHeroSmall} 320w, ${mobileHero} 540w`} sizes="100vw" width="540" height="1080" />
         <img
           src={heroImage}
+          {...responsiveImage(heroImage, "(max-aspect-ratio: 16/9) 178vh, 100vw")}
+          fetchPriority="high"
+          loading="eager"
           alt="Beautiful stone fireplace surround in modern living room"
           className="w-full h-full object-cover"
         />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-stone-900/90 via-stone-900/70 to-stone-900/40" />
       </div>
 

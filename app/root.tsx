@@ -1,31 +1,22 @@
 import type { LinksFunction, MetaFunction } from "react-router";
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Provider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Links, Meta, Outlet, Scripts } from "react-router";
 import { Developer, ScrollToTop } from "@/components/ui";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/layout";
 import { store } from "@/../app/store";
 import tailwindStylesHref from "./tailwind.css?url";
 import { usePageView } from "./analytics";
+import bodyFont from "@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url";
+import displayFont from "@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: tailwindStylesHref },
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    {
-      rel: "preconnect",
-      href: "https://fonts.gstatic.com",
-      crossOrigin: "anonymous",
-    },
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200..900&family=Source+Serif+4:wght@200..900&display=swap",
-    },
+    { rel: "preload", href: bodyFont, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+    { rel: "preload", href: displayFont, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
     {
       rel: "icon",
       type: "image/svg+xml",
@@ -48,20 +39,14 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Root() {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
     <Document>
       <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <Layout>
-              <Outlet />
-            </Layout>
-          </TooltipProvider>
-        </QueryClientProvider>
+        <TooltipProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </TooltipProvider>
       </Provider>
     </Document>
   );
@@ -84,7 +69,7 @@ function Document({ children }: { children: ReactNode }) {
         <meta charSet="UTF-8" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no"
+          content="width=device-width, initial-scale=1.0"
         />
         <Meta />
         <Links />

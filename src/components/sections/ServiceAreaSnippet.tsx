@@ -7,7 +7,7 @@ export function ServiceAreaSnippet() {
   const primaryAreas = getPrimaryAreas();
 
   return (
-    <section className="section-padding bg-primary/90">
+    <section className="section-padding bg-primary">
       <div className="container">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           {/* Text */}
@@ -15,7 +15,7 @@ export function ServiceAreaSnippet() {
             <h2 className="font-display text-2xl md:text-3xl font-semibold text-primary-foreground mb-4">
               Serving Portland, OR & Vancouver, WA
             </h2>
-            <p className="text-primary-foreground/80 mb-6 max-w-xl mx-auto lg:mx-0">
+            <p className="text-primary-foreground mb-6 max-w-xl mx-auto lg:mx-0">
               We provide expert stone and brick masonry services throughout the 
               greater Portland metro area and Southwest Washington.
             </p>
@@ -25,7 +25,7 @@ export function ServiceAreaSnippet() {
               {primaryAreas.map((area) => (
                 <div
                   key={`${area.name}-${area.state}`}
-                  className="flex items-center gap-1.5 bg-primary-foreground/10 rounded-full px-3 py-1.5"
+                  className="flex items-center gap-1.5 bg-stone-900/10 rounded-full px-3 py-1.5"
                 >
                   <MapPin className="w-3.5 h-3.5 text-primary-foreground" />
                   <span className="text-sm text-primary-foreground">

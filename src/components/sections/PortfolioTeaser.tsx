@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { responsiveImage } from '@/assets/responsive-images';
 import { getFeaturedItems } from '@/data/portfolio';
 
 export function PortfolioTeaser() {
@@ -31,6 +32,10 @@ export function PortfolioTeaser() {
             >
               <img
                 src={item.images[0]}
+                {...responsiveImage(item.images[0], index === 0
+                  ? "(min-width: 1400px) 880px, (min-width: 768px) 66vw, 50vw"
+                  : "(min-width: 1400px) 440px, (min-width: 768px) 33vw, 50vw")}
+                decoding="async"
                 alt={item.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
